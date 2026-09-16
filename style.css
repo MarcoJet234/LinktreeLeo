@@ -1,1 +1,257 @@
-.
+/* ==========================================================================
+   LINKTREE - MARCO FEIX
+   Tema: Dark Mode Minimalista
+   ==========================================================================
+   Este arquivo CSS estiliza a página inteira. Os comentários explicam
+   o "porquê" e o "o que" de cada regra, como se fosse uma aula.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. RESET BÁSICO
+   --------------------------------------------------------------------------
+   Navegadores diferentes aplicam margens e paddings padrão de formas
+   diferentes. O reset abaixo remove essas diferenças, garantindo que
+   o layout comece do "zero" e fique igual em qualquer navegador.
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;                 /* remove margem padrão de todos os elementos */
+  padding: 0;                /* remove espaçamento interno padrão */
+  box-sizing: border-box;    /* faz padding e border entrarem na largura/altura total do elemento */
+}
+
+
+/* --------------------------------------------------------------------------
+   2. VARIÁVEIS DE COR (CUSTOM PROPERTIES)
+   --------------------------------------------------------------------------
+   Guardar as cores em variáveis facilita manutenção: se quisermos trocar
+   uma cor no futuro, mudamos em um único lugar e o site inteiro se atualiza.
+   -------------------------------------------------------------------------- */
+:root {
+  --cor-fundo: #0e0e10;          /* preto levemente acinzentado, mais suave que #000 puro */
+  --cor-fundo-card: #17171a;     /* tom um pouco mais claro, usado em elementos "elevados" */
+  --cor-texto-principal: #f2f2f2; /* branco suave para o nome (evita branco puro, que cansa a vista) */
+  --cor-texto-secundario: #9a9a9f; /* cinza claro para a biografia e rodapé */
+  --cor-borda: #2a2a2e;          /* cinza escuro usado em bordas sutis */
+
+  /* Cor de destaque única para cada rede social (usadas nas classes btn-*) */
+  --cor-git: #6e5494;      /* roxo, remete ao GitHub */
+  --cor-face: #3b5998;     /* azul clássico do Facebook */
+  --cor-email: #d64545;    /* vermelho, remete a e-mail/alerta */
+  --cor-link: #0a66c2;     /* azul do LinkedIn */
+  --cor-inst: #d6249f;     /* rosa/magenta, remete ao Instagram */
+}
+
+
+/* --------------------------------------------------------------------------
+   3. ESTILO GERAL DO CORPO (BODY)
+   --------------------------------------------------------------------------
+   Aqui definimos o fundo escuro, a fonte usada em todo o site e como o
+   conteúdo é organizado verticalmente na tela.
+   -------------------------------------------------------------------------- */
+body {
+  background-color: var(--cor-fundo); /* fundo escuro (quase preto) em toda a página */
+  color: var(--cor-texto-principal);  /* cor de texto padrão, aplicada a tudo que não sobrescrever */
+
+  /* Pilha de fontes "system-ui": usa a fonte nativa do sistema operacional
+     do usuário (limpa e moderna), com alternativas caso não exista. */
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+
+  min-height: 100vh;       /* garante que o fundo escuro cubra 100% da altura da tela */
+  display: flex;            /* flexbox permite organizar header, nav e footer facilmente */
+  flex-direction: column;   /* empilha os elementos de cima para baixo */
+  align-items: center;      /* centraliza tudo horizontalmente */
+
+  padding: 48px 20px;       /* respiro nas laterais (20px) e topo/base (48px) */
+  line-height: 1.5;         /* espaçamento entre linhas, melhora a leitura */
+}
+
+
+/* --------------------------------------------------------------------------
+   4. CABEÇALHO (HEADER) - FOTO, NOME E BIOGRAFIA
+   -------------------------------------------------------------------------- */
+header {
+  display: flex;
+  flex-direction: column;  /* foto, nome e bio empilhados verticalmente */
+  align-items: center;     /* centraliza tudo dentro do header */
+  text-align: center;      /* centraliza o texto (importante para telas pequenas) */
+  max-width: 420px;        /* impede que a biografia fique com linhas muito longas */
+  margin-bottom: 40px;     /* espaço entre o header e os botões de links */
+}
+
+/* Foto de perfil redonda */
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;       /* transforma a imagem quadrada em um círculo perfeito */
+  object-fit: cover;        /* evita que a imagem fique esticada/deformada */
+  border: 3px solid var(--cor-borda); /* borda sutil ao redor da foto */
+  background-color: var(--cor-fundo-card); /* cor de fundo caso a imagem não carregue */
+  margin-bottom: 18px;      /* espaço entre a foto e o nome */
+}
+
+/* Nome do usuário */
+header h1 {
+  font-size: 1.6rem;
+  font-weight: 600;         /* seminegrito: destaca sem parecer pesado demais */
+  letter-spacing: 0.3px;    /* leve espaçamento entre letras, dá um toque moderno */
+  margin-bottom: 8px;       /* espaço entre o nome e a biografia */
+}
+
+/* Biografia / descrição curta */
+.biografia {
+  color: var(--cor-texto-secundario); /* tom mais apagado, cria hierarquia visual (nome > bio) */
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. NAVEGAÇÃO / LISTA DE BOTÕES (LINKS)
+   -------------------------------------------------------------------------- */
+.links {
+  display: flex;
+  flex-direction: column;  /* empilha os botões um embaixo do outro */
+  gap: 14px;                /* espaçamento uniforme entre os botões, sem precisar de margin */
+  width: 100%;
+  max-width: 380px;         /* impede que os botões fiquem largos demais em telas grandes */
+}
+
+
+/* --------------------------------------------------------------------------
+   6. ESTILO BASE DOS BOTÕES
+   --------------------------------------------------------------------------
+   Todas as classes ".btn-*" herdam este estilo base e depois recebem
+   apenas a cor de destaque específica lá embaixo.
+   -------------------------------------------------------------------------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 999px;    /* valor alto = cantos totalmente arredondados (formato "pílula") */
+
+  background-color: var(--cor-fundo-card); /* fundo neutro por padrão */
+  border: 1px solid var(--cor-borda);       /* contorno sutil para dar definição ao botão */
+
+  color: var(--cor-texto-principal);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;    /* remove o sublinhado padrão dos links <a> */
+
+  /* "transition" faz qualquer mudança de estilo (ex: cor, transformação)
+     acontecer de forma suave em vez de instantânea */
+  transition: transform 0.2s ease, background-color 0.2s ease,
+              border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efeito ao passar o mouse: leve elevação + brilho sutil */
+.btn:hover {
+  transform: translateY(-3px);           /* o botão "sobe" levemente */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); /* sombra suave, dá sensação de profundidade */
+}
+
+/* Efeito ao clicar: o botão "afunda" de volta, dando feedback tátil */
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Acessibilidade: contorno visível ao navegar com o teclado (tab) */
+.btn:focus-visible {
+  outline: 2px solid var(--cor-texto-principal);
+  outline-offset: 3px;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. CORES DE DESTAQUE POR REDE SOCIAL
+   --------------------------------------------------------------------------
+   Cada classe abaixo sobrescreve apenas a cor da borda no estado normal
+   e usa a cor de destaque cheia no hover — assim os botões ficam discretos
+   em repouso (combinando com o tema minimalista) e ganham vida ao interagir.
+   -------------------------------------------------------------------------- */
+
+/* GitHub */
+.btn-git:hover {
+  background-color: var(--cor-git);
+  border-color: var(--cor-git);
+}
+
+/* Facebook */
+.btn-face:hover {
+  background-color: var(--cor-face);
+  border-color: var(--cor-face);
+}
+
+/* E-mail */
+.btn-email:hover {
+  background-color: var(--cor-email);
+  border-color: var(--cor-email);
+}
+
+/* LinkedIn */
+.btn-link:hover {
+  background-color: var(--cor-link);
+  border-color: var(--cor-link);
+}
+
+/* Instagram */
+.btn-inst:hover {
+  background-color: var(--cor-inst);
+  border-color: var(--cor-inst);
+}
+
+
+/* --------------------------------------------------------------------------
+   8. RODAPÉ (FOOTER)
+   -------------------------------------------------------------------------- */
+footer {
+  margin-top: 48px;         /* separa o rodapé dos botões */
+  color: var(--cor-texto-secundario);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. RESPONSIVIDADE
+   --------------------------------------------------------------------------
+   Media query: aplica regras extras somente quando a tela for pequena
+   (celulares). Aqui reduzimos um pouco os tamanhos para melhor encaixe.
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .biografia {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   10. RESPEITO A PREFERÊNCIA DE MOVIMENTO REDUZIDO
+   --------------------------------------------------------------------------
+   Alguns usuários configuram o sistema para reduzir animações (por
+   conforto ou motivos de saúde). Essa regra desativa as transições
+   para quem tem essa preferência ativada.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
+
+
